@@ -1,13 +1,7 @@
 a=4
 c=5.0
-print(a==c)
 b=10
-a=4
-print(a<b)
 d=1
-b=10
-print(d>b)
-c=5.0
 f=5
 print(c!=f)
 print(a==b)
