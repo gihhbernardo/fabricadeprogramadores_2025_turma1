@@ -1,0 +1,22 @@
+import json
+
+dados_json = '{"nome":"ana","idade":25, "cidade":"São Paulo"}'
+
+
+dados_python= json.loads(dados_json)
+
+
+
+print(dados_python["nome"])
+print(dados_python["idade"])
+#json
+
+import json
+
+pythonvalue ={'iscat': True, 'miceCaught': 0 , 'name': 'Zophie'  , 'feleneIQ': None }
+
+stringOfjsonData = json.dumps(pythonvalue)
+print(stringOfjsonData)
+#json
+
+
