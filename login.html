@@ -1,36 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - PetCare</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(180deg, #a7f3d0, #6ee7b7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #064e3b;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 32px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-top: 0;
+      color: #047857;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: 1px solid #a7f3d0;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #10b981;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #059669;
+    }
+    .msg {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #065f46;
+    }
+    .back {
+      margin-top: 16px;
+      text-align: center;
+    }
+    .back a {
+      text-decoration: none;
+      color: #047857;
+      font-weight: 600;
+    }
+  </style>
 </head>
-<body>    
-<!-- Form which will send a GET request to the current URL -->
-<form method="get">
-  <label>
-    Name:
-    <input name="submitted-name" id="password"autocomplete="name" />
-  </label>
-  <button>Save</button>
-</form>
+<body>
+  <div class="card">
+    <h2>Login PetCare</h2>
+    <form id="loginForm">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
 
-<!-- Form which will send a POST request to the current URL -->
-<form method="post">
-  <label>
-    Name:
-    <input name="submitted-name" id="username" autocomplete="name" />
-  </label>
-  <button>Save</button>
-</form>
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" placeholder="Digite sua senha" required>
 
-<!-- Form with fieldset, legend, and label -->
-<form method="post">
-  <fieldset>
-    <legend>Do you agree to the terms?</legend>
-    <label><input type="radio" name="radio" value="yes" /> Yes</label>
-    <label><input type="radio" name="radio" value="no" /> No</label>
-  </fieldset>
-</form>
+      <button type="submit">Entrar</button>
+    </form>
+    <div class="msg" id="mensagem"></div>
+    <div class="back"><a href="/">⬅ Voltar</a></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+      const msg = document.getElementById('mensagem');
+
+      try {
+        const resposta = await fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, senha })
+        });
+
+        const data = await resposta.json();
+        if (data.sucess) {
+          msg.textContent = 'Login realizado com sucesso!';
+          msg.style.color = '#047857';
+        } else {
+          msg.textContent = 'Erro: ' + (data.error || 'Verifique seus dados.');
+          msg.style.color = 'red';
+        }
+      } catch (err) {
+        msg.textContent = 'Erro de conexão com o servidor.';
+        msg.style.color = 'red';
+      }
+    });
+  </script>
 </body>
 </html>
